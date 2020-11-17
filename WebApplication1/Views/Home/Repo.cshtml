@@ -1,0 +1,124 @@
+﻿@model WebApplication1.Models.Repositorio
+
+@{
+	ViewBag.Title = "Repositorio";
+}
+
+<div class="panel-body" style="margin-top: 90px">
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<span class="mt-1" style="font-weight: bold">Repositório @(Model.full_name)</span>
+		</div>
+		<div class="panel-body">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+							<div class="form-group">
+								@Html.LabelFor(model => model.name, new { @class = "control-label" })
+								@Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control name", style = "resize: vertical; max-width:100%; width:100%;" } })
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+							<div class="form-group">
+								@Html.LabelFor(model => model.description, new { @class = "control-label" })
+								@Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control description", style = "resize: vertical; max-width:100%; width:100%;" } })
+								@Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								@Html.LabelFor(model => model.language, new { @class = "control-label" })
+								@Html.EditorFor(model => model.language, new { htmlAttributes = new { @class = "form-control language", style = "resize: vertical; max-width:100%; width:100%;" } })
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+							<div class="form-group">
+								@Html.LabelFor(model => model.owner.login, new { @class = "control-label" })
+								@Html.EditorFor(model => model.owner.login, new { htmlAttributes = new { @class = "form-control login", style = "resize: vertical; max-width:100%; width:100%;" } })
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+							<div class="form-group">
+								@Html.LabelFor(model => model.updated_at, new { @class = "control-label" })
+								@Html.EditorFor(model => model.updated_at, new { htmlAttributes = new { @class = "form-control updated_at", style = "resize: vertical; max-width:100%; width:100%;", @readonly = "readyonly" } })
+							</div>
+						</div>
+						<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mt-5">
+							<div class="form-group">
+								@Html.LabelFor(model => model.Favorito, new { @class = "control-label mr-1" })
+								@Html.CheckBoxFor(model => model.Favorito, new { @class = "favorito", @onclick = "favorito(this);" })
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="text-center"><h2>Contribuidores</h2></div>
+					<table class="table" id="myTable">
+						<thead>
+							<tr>
+								<th>
+									@Html.DisplayName("Nome")
+								</th>
+								<th>
+									@Html.DisplayName("Tipo")
+								</th>
+								<th>
+									@Html.DisplayName("Contribuições")
+								</th>
+							</tr>
+						</thead>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<script>
+	$(document).ready(function () {
+		$('#myTable').DataTable({
+			"language": {
+				"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+			},
+			"ajax": {
+				"url": '@Url.Action("Contribuicoes", "Home", new { @nome = Model.name })',
+				"type": "GET",
+				"datatype": "json",
+				"dataSrc": ''
+			},
+			"columns": [
+				{ 'data': 'login' },
+				{ 'data': 'type' },
+				{ 'data': 'contributions' }
+			]
+		});
+
+		$('.form-control').attr("readonly", true);
+	});
+
+	function favorito(obj) {
+
+		var nome = $('.name').val();
+
+		$.ajax({
+			url: "/Home/Favorito?nome=" + nome + "&favorito=" + obj.checked,
+			method: "POST"
+		});
+	}
+
+	function voltar() {
+		window.location.href = '@Url.Action("Index", "Home")';
+	}
+</script>
+@section Scripts {
+}

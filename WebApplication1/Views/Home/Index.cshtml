@@ -1,0 +1,101 @@
+﻿@{
+	ViewData["Title"] = "GitHub";
+}
+@*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">*@
+
+
+<style>
+	.detalhes {
+		cursor: pointer;
+	}
+
+		.detalhes:hover {
+			color: blue;
+		}
+</style>
+	<section id="titulo">
+		<div class="py-5 px-2 mt-5">
+			<h1 class="text-center texto-cor-especial fonte-titulo">Rudy Venturini</h1>
+			<p class="text-center text-secondary">Repositórios Github</p>
+		</div>
+	</section>
+	<div class="panel-body">
+		<div class="panel panel-default">
+			<div class="panel-heading">Repositórios</div>
+			<div class="panel-body">				
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<table class="table" id="myTable">
+							<thead>
+								<tr>
+									<th>
+										@Html.DisplayName("Nome")
+									</th>
+									<th>
+										@Html.DisplayName("Nome completo")
+									</th>
+									<th>
+										@Html.DisplayName("Url")
+									</th>
+									<th>
+										@Html.DisplayName("Branche")
+									</th>
+									<th>
+										@Html.DisplayName("Detalhes")
+									</th>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+<script>
+		$(document).ready(function () {
+			$('#myTable').DataTable({
+				"language": {
+					"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Portuguese-Brasil.json"
+				},
+				"ajax": {
+					"url": '@Url.Action("Git", "Home")',
+					"type": "GET",
+					"datatype": "json",
+					"dataSrc": ''
+				},
+				'columnDefs': [
+					{
+						targets: -1,
+						className: 'dt-body-center'
+					}
+				],
+				"columns": [
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							return '<a id="' + data.name + '" class="detalhes" onclick="teste(this)"><span class="detalhes">' + data.name + '</span></a>';
+						}
+					},
+					{ 'data': 'full_name' },
+					{ 'data': 'url' },
+					{ 'data': 'default_branch' },
+					{
+						data: null,
+						render: function (data, type, row) {
+
+							return '<a title="Detalhes" data-toggle="tooltip" data-original-title="Detalhes" style="padding:3px;"><div id="' + data.name + '" class="glyphicon glyphicon-eye-open detalhes" onclick="teste(this)"></div></a>';
+						}
+					}
+				]
+			});
+		});
+		function teste(obj) {
+			window.location.href = "/Home/Repo?nome=" + obj.id;
+		}
+</script>

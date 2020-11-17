@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WebApplication1.Models.Repositorio>
+
+@{
+	ViewData["Title"] = "Favoritos";
+}
+
+<style>
+	#nome {
+		cursor: pointer;
+		color: #212529;
+	}
+		#nome:hover{
+			color: blue;
+		}
+</style>
+<div style="width: 100%; text-align: center; margin-top: 100px;"><h2>Favoritos</h2></div>
+<div class="row">
+	<table class="table table-hover table-striped">
+		<thead>
+			<tr>
+				<th>
+					@Html.DisplayNameFor(model => model.name)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.full_name)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.owner.login)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.description)
+				</th>
+				<th>
+					@Html.DisplayNameFor(model => model.language)
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var item in Model)
+			{
+				<tr>
+					<td>
+						<a id="nome" asp-action="Repo" asp-controller="Home" asp-route-nome="@(item.name)">
+							@Html.DisplayFor(modelItem => item.name)
+						</a>
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.full_name)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.owner.login)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.description)
+					</td>
+					<td>
+						@Html.DisplayFor(modelItem => item.language)
+					</td>
+					<td>
+						<a asp-action="Delete" asp-controller="Home" asp-route-id="@(item.Id)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</a>
+					</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+</div>
+<script>
+	$('#name').click(function () {
+		alert('funciona');
+	});
+</script>
