@@ -34,7 +34,10 @@ namespace WebApplication1.Controllers
 		{
 			var repositorios = await _client.GetRepositoriosAsync();
 
-			return Json(repositorios.ToList().OrderByDescending(x => x.name));
+			repositorios.ToList().ForEach(repositorio =>
+				repositorio.git_url = repositorio.git_url.Substring(6));
+
+			return Json(repositorios.OrderByDescending(x => x.name));
 		}
 
 		public async Task<IActionResult> Repo(string nome)
@@ -76,7 +79,7 @@ namespace WebApplication1.Controllers
 
 
 					novoRepositorio.Favorito = favorito;
-					novoRepositorio.updated_at = repositorio.updated_at.Substring(0, 10);
+					novoRepositorio.updated_at = novoRepositorio.updated_at.Substring(0, 10);
 					_context.Repositorios.Add(novoRepositorio);					
 					await _context.SaveChangesAsync();
 				}

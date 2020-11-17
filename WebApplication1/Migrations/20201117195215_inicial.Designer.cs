@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GitHub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201117164503_inicial")]
+    [Migration("20201117195215_inicial")]
     partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,6 +55,9 @@ namespace GitHub.Migrations
                     b.Property<string>("full_name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("git_url")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("language")
                         .HasColumnType("TEXT");
 
@@ -62,9 +65,6 @@ namespace GitHub.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("updated_at")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("url")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

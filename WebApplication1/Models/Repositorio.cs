@@ -22,8 +22,8 @@ namespace WebApplication1.Models
         public string description { get; set; }
         [Display(Name = "Linguagem")]
         public string language { get; set; }
-        [Display(Name = "Url")]
-        public string url { get; set; }
+        [Display(Name = "Git Url")]
+        public string git_url { get; set; }
         [Display(Name = "Branch")]
         public string default_branch { get; set; }
         [Display(Name = "Adicionar aos Favoritos")]

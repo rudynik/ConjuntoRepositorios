@@ -17,7 +17,7 @@ namespace GitHub.Migrations
                     full_name = table.Column<string>(type: "TEXT", nullable: true),
                     description = table.Column<string>(type: "TEXT", nullable: true),
                     language = table.Column<string>(type: "TEXT", nullable: true),
-                    url = table.Column<string>(type: "TEXT", nullable: true),
+                    git_url = table.Column<string>(type: "TEXT", nullable: true),
                     default_branch = table.Column<string>(type: "TEXT", nullable: true),
                     Favorito = table.Column<bool>(type: "INTEGER", nullable: false)
                 },

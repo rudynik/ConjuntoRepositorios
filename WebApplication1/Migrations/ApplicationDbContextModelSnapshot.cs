@@ -53,6 +53,9 @@ namespace GitHub.Migrations
                     b.Property<string>("full_name")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("git_url")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("language")
                         .HasColumnType("TEXT");
 
@@ -60,9 +63,6 @@ namespace GitHub.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("updated_at")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("url")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
